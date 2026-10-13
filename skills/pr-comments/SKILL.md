@@ -1,6 +1,6 @@
 ---
 name: pr-comments
-description: Use to triage the review comments of a pull request into a verdict table — for each comment, whether it is pertinent, why, and how to resolve it — before touching any code. Triggers include "pr-comments 3762", "tu penses quoi des commentaires de la PR X", "note les commentaires de la PR dans un tableau", "est-ce que ces commentaires sont pertinents", or a pasted block of review comments. Not for writing a review yourself and not for applying the fixes.
+description: Use to triage the review comments of a pull request into a verdict table — for each comment, whether it is pertinent, why, and how to resolve it — before touching any code. Triggers include "pr-comments 3762", "tu penses quoi des commentaires de la PR X", "note les commentaires de la PR dans un tableau", "est-ce que ces commentaires sont pertinents", or a pasted block of review comments. Not for writing a review yourself (use reviewing-code) and not for applying the fixes.
 ---
 
 # Triage of PR review comments

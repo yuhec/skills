@@ -9,6 +9,7 @@
 | `shipping-a-ticket` | `.claude/skills/shipping-a-ticket/SKILL.md` | yes, when work comes from a ticket tool (ClickUp, Jira, Linear, GitHub Issues) |
 | `placing-changelog-fragments` | `.claude/skills/placing-changelog-fragments/SKILL.md` | optional — when the repo uses fragments (towncrier, changesets, `changelog.d/`) |
 | `stacking-branches` | `.claude/skills/stacking-branches/SKILL.md` | optional — when the team stacks PRs (PRs based on other PRs) |
+| review rules | `.claude/review-rules.md` | yes — the project-specific input of the global `reviewing-code` skill |
 
 ## Applies when / Skip when
 
@@ -61,6 +62,10 @@
 | `{{TICKET_TOOL}}` / `{{TICKET_FETCH}}` | the tool, and how the agent reads a ticket (MCP tool, CLI, `gh issue view`) |
 | `{{PR_LANGUAGE}}`, `{{PR_TEMPLATE}}` | language; template path or empty |
 | `{{FRAGMENT_RULE}}` | fragment folder(s), filename pattern, types, length limit |
+| `{{TICKET_ID_RULE}}`, `{{REFINEMENT_NOTES}}` | where the ticket id lives; where local refinement notes live, or empty |
+| `{{GENERATED_ARTIFACTS}}` | one row per generated artifact: path → what its diff must show |
+| `{{RULES_POINTER}}`, `{{KNOWN_ABSTRACTIONS}}` | the coding-rules section to apply; enums/registries/helpers new code should reuse |
+| `{{TEST_CONVENTIONS}}` | one row per observed test convention |
 
 ## Skeleton — `pre-pr`
 
@@ -157,9 +162,9 @@ across several branches.
      new ones; update tests with any behaviour change; regenerate generated files.
      [[if FRAGMENT_RULE]]Add the changelog fragment now (`placing-changelog-fragments`).[[end]]
    - *Verify* — run `pre-pr` until every gate is green. Never open a PR on red.
-   - *Self-review* — review `git diff <base>...HEAD` with `references/review-checklist.md`
-     (delegate to a fresh subagent so the author is not its own reviewer). Fix critical and obvious
-     findings; **stop and discuss any judgment call with the user before pushing**.
+   - *Self-review* — run `reviewing-code` in `full` mode on the branch, in a fresh subagent so the
+     author is not its own reviewer. Fix 🔴 and obvious 🟡 findings, re-run `pre-pr` if code
+     changed; **stop and discuss every "À trancher" item with the user before pushing**.
    - *Open* — commit (`{{COMMIT_PATTERN}}`), push, reuse an existing PR if any, else
      `gh pr create --draft`. Description in {{PR_LANGUAGE}}: context + ticket link by name, a
      diagram of the flow or data shape before any prose, design choices with their why, files per
@@ -170,8 +175,6 @@ across several branches.
    change ticket statuses unless asked.
 ````
 
-Copy `references/review-checklist.md` from this template next to the generated skill, and delete
-the framework sections that do not apply to the project's stack.
 
 ## Skeleton — `placing-changelog-fragments` (optional)
 
@@ -210,6 +213,38 @@ Generate only when the team stacks PRs. Core rules to include, all proven in pra
   not the working tree.
 - One worktree per stack; never touch the main checkout the user is testing from.
 
+## Skeleton — `.claude/review-rules.md`
+
+Read by the global `reviewing-code` skill. Not a skill itself: no frontmatter. Only what the
+project's code and docs establish; drop an empty section.
+
+````markdown
+# Review rules — <project>
+
+## Base and ticket
+- Base branch: `{{BASE}}`. Stacked branches are reviewed against their parent branch.
+- Ticket id: {{TICKET_ID_RULE}} (e.g. the `#<id>` suffix of the branch and commit messages).
+- Load it with {{TICKET_FETCH}}, with its parent and siblings. {{REFINEMENT_NOTES}}
+
+## Generated artifacts — read the diff only
+| Artifact | What its diff must show |
+|---|---|
+| {{GENERATED_ARTIFACTS}} |
+
+## Project rules to enforce
+- Coding rules: {{RULES_POINTER}} (e.g. `.claude/CLAUDE.md` §3) — apply the whole section.
+- Known abstractions to converge on: {{KNOWN_ABSTRACTIONS}}
+
+## Test conventions
+| Check | Flag when | Fix |
+|---|---|---|
+| {{TEST_CONVENTIONS}} |
+````
+
+Fill `{{TEST_CONVENTIONS}}` only from conventions observed in at least three existing test files
+(or written in the rules file); `{{KNOWN_ABSTRACTIONS}}` from enums/registries/helpers that recent
+reviews or the rules file point to.
+
 ## Prove
 
 1. Run every `pre-pr` command on the current branch; all exit codes recorded.
@@ -217,7 +252,9 @@ Generate only when the team stacks PRs. Core rules to include, all proven in pra
    recipe against `origin/{{BASE}}`, delete the clone.
 3. `shipping-a-ticket`: fetch one real ticket with `{{TICKET_FETCH}}` and print its title and
    subtasks — proves the ticket access path. Do not implement anything.
-4. Fragment rule: build a fragment name for a fake id and check the folder exists and matches the
+4. `.claude/review-rules.md`: run `reviewing-code` in `quick` mode on the current branch; it must
+   read the file and name the right base.
+5. Fragment rule: build a fragment name for a fake id and check the folder exists and matches the
    last merged fragments.
 
 ## Lessons baked in

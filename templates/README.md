@@ -39,5 +39,5 @@ themselves.
 | Template | Produces |
 |---|---|
 | [`task-runner-and-tests`](task-runner-and-tests/TEMPLATE.md) | `running-tasks`, `testing`, optional `writing-tests` |
-| [`git-and-pr`](git-and-pr/TEMPLATE.md) | `pre-pr`, `syncing-branches`, `shipping-a-ticket`, optional `placing-changelog-fragments`, `stacking-branches` |
+| [`git-and-pr`](git-and-pr/TEMPLATE.md) | `pre-pr`, `syncing-branches`, `shipping-a-ticket`, `.claude/review-rules.md` (input of `reviewing-code`), optional `placing-changelog-fragments`, `stacking-branches` |
 | [`verification`](verification/TEMPLATE.md) | `verifying-<surface>` with its feature map, via `creating-verification-skills` |

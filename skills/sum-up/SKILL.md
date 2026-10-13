@@ -1,6 +1,6 @@
 ---
 name: sum-up
-description: Use to explain what a branch or PR does so the user can own it without cognitive debt — a short, schematic walkthrough of the files touched, the flow and the data at each step. Triggers include "sum-up <branche>", "résume cette PR", "explique-moi ce que fait la branche X", "retrace ce que tu as fait", "fais-moi un résumé schématique", "je veux m'approprier cette PR". Not for a code review and not for a decision log.
+description: Use to explain what a branch or PR does so the user can own it without cognitive debt — a short, schematic walkthrough of the files touched, the flow and the data at each step. Triggers include "sum-up <branche>", "résume cette PR", "explique-moi ce que fait la branche X", "retrace ce que tu as fait", "fais-moi un résumé schématique", "je veux m'approprier cette PR". Not for a code review (use reviewing-code) and not for a decision log.
 ---
 
 # Sum-up of a branch

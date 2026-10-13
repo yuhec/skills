@@ -53,7 +53,7 @@ Present one table, in the user's language, and wait for the go:
 | `verifying-backend-api` | verification | ✅ generate | FastAPI on :5002 + Postgres in compose | auth = seeded admin token |
 
 Below the table, list the generic skills of this repo that apply as-is (they are installed
-globally, not copied): `grill-me`, `brainstorming`, `sum-up`, `pr-comments`,
+globally, not copied): `reviewing-code` (fed by the generated `.claude/review-rules.md`), `grill-me`, `brainstorming`, `sum-up`, `pr-comments`,
 `writing-manual-test-scenarios`, `explain-diff-html`, `capturing-task-lessons`,
 `logging-decision-trails`, `evaluating-skill-changes`, `delegating-to-codex`,
 `creating-verification-skills`, `maintaining-verification-skills`.
