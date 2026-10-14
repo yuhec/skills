@@ -11,7 +11,7 @@ Exclude generated artifacts from the diff Codex sees, and pin it read-only to th
 ```bash
 git diff origin/<base>...<head> -- . ':!**/*.lock' ':!**/package-lock.json' ':!<generated paths from review-rules>' > /tmp/review-diff.patch
 codex exec -C "$(git rev-parse --show-toplevel)" -m <large-codex-model> -s read-only -o /tmp/codex-review.md \
-  "You are an adversarial code reviewer. The diff to review is in /tmp/review-diff.patch; read surrounding code in this repository as needed. Find correctness bugs, regressions, security issues and design problems. For each: file:line, severity (critical/major/minor), the triggering scenario, a concrete fix. Ground every claim in the code; report nothing you cannot point to." < /dev/null
+  "You are an adversarial code reviewer. The diff to review is in /tmp/review-diff.patch; read surrounding code in this repository as needed. Find correctness bugs, regressions, security issues and design problems. For each: file:line, severity (critical/major/minor), the triggering scenario, a concrete fix. Ground every claim in the code; report nothing you cannot point to. Write your answer in French, keeping file paths, symbols and code in their original form." < /dev/null
 ```
 
 Budget up to 5 minutes. On failure or timeout, continue Claude-only and say so.

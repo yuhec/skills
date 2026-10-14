@@ -8,6 +8,12 @@ description: Use for any code review of local changes, a branch or a PR — "rev
 Find what is wrong or worse than it should be in a change, prove each finding against the code,
 and report it so it can be acted on. **Report-only unless the mode is `fix`.**
 
+**Langue : tout ce que l'utilisateur lit est en français** — le rapport, chaque finding, les
+corrections proposées, les questions « À trancher », les messages de progression et le résumé du
+mode `fix` — quelle que soit la langue de la demande, du code, des lentilles ou des sorties des
+sous-agents et de Codex (traduis-les). Les identifiants restent tels quels : noms de fichiers,
+symboles, commandes, messages d'erreur cités et noms de catégories (`Correctness`, `Reuse`…).
+
 ## Modes
 
 | Mode | Lenses | When |
@@ -61,8 +67,8 @@ them (that would dirty the tree).
 
 Each lens is a file in this skill's `references/lenses/`. Read the lenses the mode needs and apply
 them. For a diff over ~15 files or ~800 changed lines, run the lenses as **parallel read-only
-subagents**, each given the lens file, the file list, the base, and the context from Step 2; you
-keep the synthesis.
+subagents**, each given the lens file, the file list, the base, and the context from Step 2, and told to
+write its findings in French; you keep the synthesis.
 
 | Lens | File | Looks for |
 |---|---|---|
@@ -89,7 +95,7 @@ raises confidence, say so.
 
 ## Step 6 — Report
 
-In the user's language. First line: mode, branch → base, verdict (**Prêt** / **Prêt avec
+In French, always. First line: mode, branch → base, verdict (**Prêt** / **Prêt avec
 remarques** / **À corriger**). Then:
 
 ```markdown
