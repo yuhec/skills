@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TITRE DU CAHIER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ===== Jetons de couleur : ne pas modifier sans raison ===== */
+:root{
+  --desk:#DCE3EA; --paper:#F7F7F2; --rule:#C6D6E6; --margin:#E39AA6; --ink:#28304A; --soft:#5A6280; --ring:#3B3F52;
+  --hy:rgba(255,226,92,.65); --hg:rgba(146,222,140,.6); --hp:rgba(255,160,190,.6);
+  --hv:rgba(196,170,255,.6); --hb:rgba(150,205,255,.6); --ho:rgba(255,190,120,.6);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* Mode sombre : le bureau s'assombrit, le papier reste clair pour que les surligneurs restent lisibles */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --desk:#161C24; --paper:#ECEAE2; --rule:#BFCDDC; --ring:#8A90A3; }
+}
+:root[data-theme="dark"]{ --desk:#161C24; --paper:#ECEAE2; --rule:#BFCDDC; --ring:#8A90A3; }
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 3.2rem)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"Kalam","Comic Neue","Segoe Print","Bradley Hand",cursive;font-size:16px;line-height:1.5}
+
+/* ===== Navigation (à supprimer s'il n'y a qu'une page) ===== */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--desk);padding:.5rem .6rem;display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:999px;padding:.15rem .75rem;font-size:.95rem}
+nav a:focus-visible{outline:2px solid #3B6FD8;outline-offset:2px}
+
+/* ===== Page de cahier ===== */
+.wrap{max-width:52rem;margin:0 auto;padding:.6rem .5rem 3rem}
+.page{position:relative;background-color:var(--paper);
+  background-image:repeating-linear-gradient(to bottom,transparent 0 27px,var(--rule) 27px 28px);
+  border-radius:6px;margin:0 0 1.6rem;padding:1.2rem 1rem 1.6rem 3rem;box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.page::before{content:"";position:absolute;left:2.3rem;top:0;bottom:0;width:2px;background:var(--margin);opacity:.8}
+.page::after{content:"";position:absolute;left:.35rem;top:.8rem;bottom:.8rem;width:1.3rem;
+  background:radial-gradient(circle at 55% 50%,var(--desk) 0 4px,var(--ring) 4.5px 6.5px,transparent 7px) 0 0/1.3rem 22px repeat-y}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;flex-wrap:wrap;margin-bottom:.4rem}
+.pg{font-size:.9rem;color:var(--soft)}
+.sticky{background:var(--hp);transform:rotate(-4deg);padding:.2rem .6rem;font-size:.85rem;max-width:11rem;line-height:1.2}
+h1,h2.title{font-weight:700;font-size:clamp(1.5rem,5.5vw,2.1rem);text-align:center;margin:.2rem auto 1rem;border:2.5px solid #3F8A57;border-radius:6px;padding:.1rem 1rem;width:fit-content;max-width:100%;background:linear-gradient(transparent 55%,var(--hg) 55%)}
+
+/* ===== Questions ===== */
+.q{display:flex;align-items:center;gap:.55rem;margin:1.2rem 0 .4rem;flex-wrap:wrap}
+.qn{background:var(--hp);border-radius:6px;padding:0 .45rem;font-weight:700;font-size:1.25rem}
+h3{margin:0;font-weight:700;font-size:1.22rem;line-height:1.25}
+
+/* ===== Surligneurs ===== */
+mark{color:inherit;padding:0 .2em;border-radius:3px}
+.hy{background:var(--hy)}.hg{background:var(--hg)}.hp{background:var(--hp)}.hv{background:var(--hv)}.hb{background:var(--hb)}.ho{background:var(--ho)}
+
+/* ===== Mise en page ===== */
+.row{display:grid;gap:.8rem}
+@media (min-width:46rem){.row.two{grid-template-columns:1fr 1fr}}
+.cols3{display:grid;gap:.5rem}
+@media (min-width:40rem){.cols3{grid-template-columns:repeat(3,1fr)}}
+.grid{display:grid;gap:.7rem}
+@media (min-width:44rem){.grid{grid-template-columns:1fr 1fr}}
+.wide{grid-column:1/-1}
+ul{margin:.2rem 0;padding-left:1.15rem}
+li{margin:.2rem 0}
+p{margin:.3rem 0}
+
+/* ===== Encadrés et schémas ===== */
+.box{border:2px dashed var(--soft);border-radius:8px;padding:.6rem .7rem}
+.box-t{text-align:center;font-weight:700;margin-bottom:.4rem}
+.box-t span{background:var(--hp);padding:0 .4rem;border-radius:3px}
+.box h2{font-size:1.12rem;margin:0 0 .2rem}
+.flow{display:flex;flex-direction:column;align-items:stretch}
+.step{border:2px solid var(--ink);border-radius:6px;padding:.2rem .5rem;text-align:center}
+.arrow{text-align:center;line-height:1.1;font-size:1.1rem}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;justify-content:center}
+.chain .step{padding:.1rem .45rem;font-size:.95rem}
+.mini{border:2px solid var(--ink);border-radius:6px;padding:.3rem .5rem}
+.mini b{display:block}
+
+/* ===== Tableaux ===== */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:30rem}
+th,td{border:1.5px solid var(--ink);padding:.2rem .4rem;vertical-align:top;text-align:left}
+th{background:var(--hb)}
+td:first-child{font-weight:700}
+
+/* ===== Avertissements, astuces, code ===== */
+.warn{border-left:4px solid #D9534F;background:rgba(255,160,160,.25);padding:.4rem .6rem;border-radius:0 6px 6px 0;margin-top:.6rem}
+.tip{border-left:4px solid #3F8A57;background:rgba(146,222,140,.25);padding:.4rem .6rem;border-radius:0 6px 6px 0;margin-top:.6rem}
+pre{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:.78rem;line-height:1.45;background:rgba(255,255,255,.75);border:1.5px solid var(--ink);border-radius:6px;padding:.5rem .6rem;overflow-x:auto;margin:.3rem 0}
+code{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:.82em;background:rgba(255,255,255,.7);padding:0 .25em;border-radius:3px;word-break:break-word}
+.method{text-align:center;margin:.3rem 0 .8rem}
+.method span{padding:0 .3rem;border-radius:3px}
+.foot{font-size:.85rem;color:var(--soft);text-align:center;padding:0 1rem}
+</style>
+</head>
+<body>
+
+<!-- Une entrée par page. Supprimer <nav> s'il n'y a qu'une page. -->
+<nav aria-label="Sujets">
+  <a href="#p1">Sujet 1</a><a href="#p2">Sujet 2</a>
+</nav>
+
+<div class="wrap">
+
+<!-- ================= FORMAT CAHIER : une section par page ================= -->
+<section class="page" id="p1">
+  <div class="head"><span class="pg">Page 1 sur 2</span><span class="sticky">Idée clé de la page en une phrase</span></div>
+  <h2 class="title">Titre de la page</h2>
+
+  <!-- Question avec texte + schéma côte à côte -->
+  <div class="q"><span class="qn">Q1</span><h3><mark class="hv">Question formulée comme à l'examen ?</mark></h3></div>
+  <div class="row two">
+    <ul>
+      <li>Idée courte avec un <mark class="hy">mot-clé</mark> surligné.</li>
+      <li>Deuxième idée, une seule par puce.</li>
+    </ul>
+    <div class="box">
+      <div class="box-t"><span>Titre du schéma</span></div>
+      <div class="flow">
+        <div class="step" style="background:var(--hb)">Étape 1</div><div class="arrow">↓</div>
+        <div class="step" style="background:var(--hv)">Étape 2</div><div class="arrow">↓</div>
+        <div class="step" style="background:var(--hg)">Étape 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question avec tableau comparatif -->
+  <div class="q"><span class="qn">Q2</span><h3><mark class="hv">A, B ou C : lequel choisir ?</mark></h3></div>
+  <div class="tw"><table>
+    <tr><th>Option</th><th>Force</th><th>Faiblesse</th></tr>
+    <tr><td>A</td><td>…</td><td>…</td></tr>
+    <tr><td>B</td><td>…</td><td>…</td></tr>
+  </table></div>
+  <p class="warn">Piège fréquent ou erreur à éviter.</p>
+  <p class="tip">Règle à retenir ou astuce.</p>
+</section>
+
+<!-- ================= FORMAT RAPPEL RAPIDE : une seule page en grille ================= -->
+<section class="page" id="p2">
+  <h2 class="title">Rappel rapide</h2>
+  <p class="method">Fil conducteur : <span class="hy">étape</span> → <span class="hb">outil</span> → <span class="hg">métrique</span></p>
+  <div class="grid">
+    <div class="box">
+      <h2><mark class="hv">Notion 1</mark></h2>
+      <ul><li>Puce très courte.</li><li>Puce très courte.</li></ul>
+    </div>
+    <div class="box">
+      <h2><mark class="hb">Notion 2</mark></h2>
+      <ul><li>Puce très courte.</li><li>Puce très courte.</li></ul>
+    </div>
+    <div class="box wide">
+      <h2><mark class="hg">Schéma principal</mark></h2>
+      <div class="chain">
+        <div class="step" style="background:var(--hp)">A</div>→
+        <div class="step" style="background:var(--hy)">B</div>→
+        <div class="step" style="background:var(--hg)">C</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p class="foot">Source : TITRE OU URL · Créé le DATE · Points non vérifiés marqués « à vérifier ».</p>
+</div>
+</body>
+</html>
